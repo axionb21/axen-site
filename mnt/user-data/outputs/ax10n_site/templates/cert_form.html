@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}New certification{% endblock %}
+{% block content %}
+<section class="section">
+  <h2 class="section-title">new certification</h2>
+  <form method="post" class="form" enctype="multipart/form-data">
+    <label>name<input name="name" placeholder="CompTIA Security+" required></label>
+    <label>issuer<input name="issuer" placeholder="CompTIA"></label>
+    <label>verification link<input name="link" placeholder="https://..."></label>
+    <label>image (.png/.jpg/.webp, max 5MB)<input type="file" name="image" accept=".png,.jpg,.jpeg,.webp" required></label>
+    <button type="submit">save</button>
+  </form>
+</section>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<section class="section">
+  <div class="dash-head">
+    <h2 class="section-title">dashboard</h2>
+    <a href="{{ url_for('admin_logout') }}" class="back">log out</a>
+  </div>
+
+  <h3>writeups <a class="pill" href="{{ url_for('writeup_new') }}">+ new</a></h3>
+  <table class="admin-table">
+    {% for w in writeups %}
+    <tr>
+      <td>{{ w.title }}</td>
+      <td>{{ w.event }}</td>
+      <td><a href="{{ url_for('writeup_edit', wid=w.id) }}">edit</a></td>
+      <td>
+        <form method="post" action="{{ url_for('writeup_delete', wid=w.id) }}" onsubmit="return confirm('delete this writeup?')">
+          <button type="submit" class="link-btn">delete</button>
+        </form>
+      </td>
+    </tr>
+    {% else %}<tr><td class="empty">none yet</td></tr>{% endfor %}
+  </table>
+
+  <h3>certifications <a class="pill" href="{{ url_for('cert_new') }}">+ new</a></h3>
+  <table class="admin-table">
+    {% for c in certs %}
+    <tr>
+      <td><img class="thumb" src="{{ url_for('static', filename='uploads/certs/' + c.image_filename) }}"></td>
+      <td>{{ c.name }}</td>
+      <td>
+        <form method="post" action="{{ url_for('cert_delete', cid=c.id) }}" onsubmit="return confirm('delete this certification?')">
+          <button type="submit" class="link-btn">delete</button>
+        </form>
+      </td>
+    </tr>
+    {% else %}<tr><td class="empty">none yet</td></tr>{% endfor %}
+  </table>
+
+  <h3>social links (used by <code>open &lt;label&gt;</code> in terminal)</h3>
+  <form method="post" action="{{ url_for('social_save') }}" class="form inline">
+    <input name="label" placeholder="linkedin / github" required>
+    <input name="url" placeholder="https://..." required>
+    <button type="submit">save</button>
+  </form>
+  <ul class="social-list">
+    {% for s in socials %}<li>{{ s.label }} → {{ s.url }}</li>{% endfor %}
+  </ul>
+</section>
+{% endblock %}
